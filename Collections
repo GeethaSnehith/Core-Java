@@ -1,0 +1,191 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class ColorArrayList {
+    public static void main(String[] args) {
+        ArrayList<String> colors = new ArrayList<>();
+
+        // Add colors
+        colors.add("Red");
+        colors.add("Green");
+        colors.add("Blue");
+        colors.add("Yellow");
+        System.out.println("Initial list: " + colors);
+
+        // Iterate all elements
+        System.out.print("Colors: ");
+        for (String color : colors) {
+            System.out.print(color + " ");
+        }
+        System.out.println();
+
+        // Insert at first position
+        colors.add(0, "Black");
+        System.out.println("After inserting Black at first: " + colors);
+
+        // Retrieve element at index 2
+        System.out.println("Element at index 2: " + colors.get(2));
+
+        // Update element at index 3
+        colors.set(3, "Purple");
+        System.out.println("After update at index 3: " + colors);
+
+        // Remove third element (index 2)
+        colors.remove(2);
+        System.out.println("After removing third element: " + colors);
+
+        // Search for an element
+        System.out.println("List contains Green? " + colors.contains("Green"));
+
+        // Sort list
+        Collections.sort(colors);
+        System.out.println("Sorted list: " + colors);
+
+        // Copy list to another
+        ArrayList<String> copyList = new ArrayList<>(colors);
+        System.out.println("Copied list: " + copyList);
+
+        // Shuffle list
+        Collections.shuffle(colors);
+        System.out.println("Shuffled list: " + colors);
+
+        // Reverse elements
+        Collections.reverse(colors);
+        System.out.println("Reversed list: " + colors);
+
+        // Extract portion (sublist) index 1 to 3
+        System.out.println("Sublist (1 to 3): " + colors.subList(1, 4));
+
+        // Replace second element
+        colors.set(1, "Orange");
+        System.out.println("After replacing second element: " + colors);
+    }
+}
+
+
+
+
+
+
+
+
+import java.util.HashSet;
+
+public class SetOperations {
+    public static void main(String[] args) {
+        HashSet<Integer> set1 = new HashSet<>();
+        HashSet<Integer> set2 = new HashSet<>();
+
+        // Add elements
+        Collections.addAll(set1, 0, 1, 2, 3, 4, 5);
+        Collections.addAll(set2, 0, 1, 3, 4, 7, 8, 9);
+
+        System.out.println("Set 1: " + set1);
+        System.out.println("Set 2: " + set2);
+
+        // Union
+        HashSet<Integer> union = new HashSet<>(set1);
+        union.addAll(set2);
+        System.out.println("Union: " + union);
+
+        // Intersection
+        HashSet<Integer> intersection = new HashSet<>(set1);
+        intersection.retainAll(set2);
+        System.out.println("Intersection: " + intersection);
+
+        // Difference
+        HashSet<Integer> difference = new HashSet<>(set1);
+        difference.removeAll(set2);
+        System.out.println("Difference: " + difference);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+class Employee {
+    private int id;
+    private String name;
+    private String city;
+
+    public Employee(int id, String name, String city) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+    }
+
+    public int getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void display() {
+        System.out.println("ID: " + id + ", Name: " + name + ", City: " + city);
+    }
+}
+
+public class EmployeeMap {
+    public static void main(String[] args) {
+        Map<Integer, Employee> employeesMap = new HashMap<>();
+
+        // Add 5 employees
+        employeesMap.put(1, new Employee(1, "Alice", "Delhi"));
+        employeesMap.put(2, new Employee(2, "Bob", "Mumbai"));
+        employeesMap.put(3, new Employee(3, "Charlie", "Kolkata"));
+        employeesMap.put(4, new Employee(4, "David", "Chennai"));
+        employeesMap.put(5, new Employee(5, "Eva", "Bangalore"));
+
+        // Display all employees
+        System.out.println("All employees:");
+        for (Employee emp : employeesMap.values()) {
+            emp.display();
+        }
+
+        // Display employee detail by ID
+        int searchId = 3;
+        System.out.println("\nDetails of employee with ID " + searchId + ":");
+        Employee emp = employeesMap.get(searchId);
+        if (emp != null) {
+            emp.display();
+        } else {
+            System.out.println("Employee not found.");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
