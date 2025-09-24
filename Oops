@@ -1,0 +1,365 @@
+package assignments;
+
+public class Employee {
+    private double salary;
+    private int hoursPerDay;
+
+    // Method to take salary and hours as input
+    public void getInfo(double salary, int hoursPerDay) {
+        this.salary = salary;
+        this.hoursPerDay = hoursPerDay;
+    }
+
+    // Add $10 if salary less than 500
+    public void addSal() {
+        if (salary < 500) {
+            salary += 10;
+        }
+    }
+
+    // Add $5 if hours per day more than 6
+    public void addWork() {
+        if (hoursPerDay > 6) {
+            salary += 5;
+        }
+    }
+
+    // Method to print final salary
+    public void printSalary() {
+        System.out.println("Final Salary is $" + salary);
+    }
+}
+
+package assignments;
+import java.util.Scanner;
+
+public class EmployeeTest {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Employee emp = new Employee();
+
+        System.out.print("Enter salary: ");
+        double salary = sc.nextDouble();
+        System.out.print("Enter hours worked per day: ");
+        int hours = sc.nextInt();
+
+        emp.getInfo(salary, hours);
+        emp.addSal();
+        emp.addWork();
+        emp.printSalary();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+package assignments;
+
+public class Student {
+    private String name;
+    private int yearOfJoining;
+    private String address;
+
+    // Constructor to initialize student info
+    public Student(String name, int yearOfJoining, String address) {
+        this.name = name;
+        this.yearOfJoining = yearOfJoining;
+        this.address = address;
+    }
+
+    // Method to print student info
+    public void printInfo() {
+        System.out.println(name + " " + yearOfJoining + " " + address);
+    }
+}
+
+
+package assignments;
+
+import java.util.Scanner;
+
+public class StudentTest {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Student[] students = new Student[3];
+
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter name: ");
+            String name = sc.next();
+            System.out.print("Enter year of joining: ");
+            int year = sc.nextInt();
+            System.out.print("Enter address: ");
+            String address = sc.next();
+
+            students[i] = new Student(name, year, address);
+        }
+
+        System.out.println("\nName Year of joining Address");
+        for (Student s : students) {
+            s.printInfo();
+        }
+    }
+}
+
+
+
+
+
+
+
+package assignments;
+
+public class BankAccount {
+    private double balance;
+
+    // Constructor
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    // Deposit method
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited $" + amount);
+        } else {
+            System.out.println("Invalid deposit amount");
+        }
+    }
+
+    // Withdraw method
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn $" + amount);
+        } else {
+            System.out.println("Invalid withdraw amount or insufficient balance");
+        }
+    }
+
+    // Display balance
+    public void displayBalance() {
+        System.out.println("Current balance: $" + balance);
+    }
+}
+
+
+
+package assignments;
+
+import java.util.Scanner;
+
+public class BankAccountTest {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter initial balance: ");
+        double initialBalance = sc.nextDouble();
+
+        BankAccount account = new BankAccount(initialBalance);
+        account.displayBalance();
+
+        System.out.print("Enter amount to deposit: ");
+        double deposit = sc.nextDouble();
+        account.deposit(deposit);
+        account.displayBalance();
+
+        System.out.print("Enter amount to withdraw: ");
+        double withdraw = sc.nextDouble();
+        account.withdraw(withdraw);
+        account.displayBalance();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package assignments;
+
+public interface Truck {
+    int getAxles();
+    int getWeight();
+    String getMake();
+}
+
+package assignments;
+
+public interface TollBooth {
+    void calculateToll(Truck truck);
+    void displayData();
+    void resetData();
+}
+
+
+
+
+
+
+
+
+package assignments;
+
+public class FordTruck implements Truck {
+    private int axles;
+    private int weight;
+    
+    public FordTruck(int axles, int weight) {
+        this.axles = axles;
+        this.weight = weight;
+    }
+    
+    public int getAxles() {
+        return axles;
+    }
+    
+    public int getWeight() {
+        return weight;
+    }
+    
+    public String getMake() {
+        return "Ford";
+    }
+}
+
+public class NissanTruck implements Truck {
+    private int axles;
+    private int weight;
+    
+    public NissanTruck(int axles, int weight) {
+        this.axles = axles;
+        this.weight = weight;
+    }
+    
+    public int getAxles() {
+        return axles;
+    }
+    
+    public int getWeight() {
+        return weight;
+    }
+    
+    public String getMake() {
+        return "Nissan";
+    }
+}
+
+public class DaewooTruck implements Truck {
+    private int axles;
+    private int weight;
+
+    public DaewooTruck(int axles, int weight) {
+        this.axles = axles;
+        this.weight = weight;
+    }
+
+    public int getAxles() {
+        return axles;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public String getMake() {
+        return "Daewoo";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+package assignments;
+
+public class AlleghenyTollBooth implements TollBooth {
+    private int totalTrucks = 0;
+    private int totalReceipts = 0;
+
+    @Override
+    public void calculateToll(Truck truck) {
+        totalTrucks++;
+        int axles = truck.getAxles();
+        int weight = truck.getWeight();
+
+        // Toll calculation: 5 per axle + 10 per half ton (500 kg)
+        int toll = 5 * axles + 10 * (weight / 500);
+
+        totalReceipts += toll;
+
+        System.out.println("Arrival of " + truck.getMake() + " Truck");
+        System.out.println("Truck arrival - Axles " + axles + " Total weight " + weight);
+        System.out.println("Toll due " + toll);
+    }
+
+    @Override
+    public void displayData() {
+        System.out.println("Totals since last collection - Receipts " + totalReceipts + " Trucks " + totalTrucks);
+    }
+
+    @Override
+    public void resetData() {
+        System.out.println("Collecting receipts");
+        displayData();
+        totalReceipts = 0;
+        totalTrucks = 0;
+        System.out.println("Reset Reciepts");
+        displayData();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package assignments;
+
+public class TestTollBooth {
+    public static void main(String[] args) {
+        TollBooth booth = new AlleghenyTollBooth();
+
+        Truck ford = new FordTruck(5, 12500);
+        Truck nissan = new NissanTruck(2, 5000);
+        Truck daewoo = new DaewooTruck(6, 17000);
+
+        booth.calculateToll(ford);
+        booth.calculateToll(nissan);
+        booth.calculateToll(daewoo);
+
+        booth.resetData();
+    }
+}
+
