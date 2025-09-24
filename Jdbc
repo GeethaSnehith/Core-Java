@@ -1,0 +1,184 @@
+import java.sql.*;
+
+public class Employee {
+    private Connection con = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+
+    // Connect to MySQL database
+    public Connection getConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training", "root", "redhat");
+        } catch (Exception e) {
+            System.out.println("Connection failed: " + e);
+        }
+        return con;
+    }
+
+    // Insert new employee record
+    public void insertEmployee(String name, String city, String contact) {
+        System.out.println("Inserting a new employee...");
+        try {
+            con = getConnection();
+            String query = "INSERT INTO user(name, city, contact) VALUES (?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, city);
+            ps.setString(3, contact);
+            int result = ps.executeUpdate();
+
+            if (result > 0)
+                System.out.println("Employee added successfully.");
+            else
+                System.out.println("Insert failed.");
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    // Display all employees
+    public void getEmployee() {
+        System.out.println("Displaying all employees...");
+        try {
+            con = getConnection();
+            String query = "SELECT * FROM user";
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            System.out.println("Id\tName\tCity\tContact");
+            System.out.println("----------------------------------------");
+            while (rs.next()) {
+                System.out.print(rs.getInt("id") + "\t");
+                System.out.print(rs.getString("name") + "\t");
+                System.out.print(rs.getString("city") + "\t");
+                System.out.println(rs.getString("contact"));
+            }
+            System.out.println("----------------------------------------");
+
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    // Update employee city by ID
+    public void updateEmployee(int id, String city) {
+        System.out.println("Updating employee...");
+        try {
+            con = getConnection();
+            String query = "UPDATE user SET city = ? WHERE id = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, city);
+            ps.setInt(2, id);
+            int result = ps.executeUpdate();
+
+            if (result > 0)
+                System.out.println("Employee updated successfully.");
+            else
+                System.out.println("Update failed or employee not found.");
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    // Delete employee by ID
+    public void deleteEmployee(int id) {
+        System.out.println("Deleting employee...");
+        try {
+            con = getConnection();
+            String query = "DELETE FROM user WHERE id = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            int result = ps.executeUpdate();
+
+            if (result > 0)
+                System.out.println("Employee deleted successfully.");
+            else
+                System.out.println("Delete failed or employee not found.");
+
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+import java.util.Scanner;
+
+public class TestEmployeesJDBC {
+    public static void main(String[] args) {
+        Employee e = new Employee();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Global Tech Solutions");
+        System.out.println("---------- Employee Management System ----------");
+
+        while (true) {
+            System.out.println("\nPress 1 for New Employee");
+            System.out.println("Press 2 to Display Employees");
+            System.out.println("Press 3 for Update Employee");
+            System.out.println("Press 4 for Delete Employee");
+            System.out.println("Press 5 for Exit");
+
+            int option = sc.nextInt();
+
+            switch (option) {
+                case 1:
+                    System.out.println("Enter Employee Name:");
+                    String name = sc.next();
+                    System.out.println("Enter City:");
+                    String city = sc.next();
+                    System.out.println("Enter Contact No:");
+                    String contact = sc.next();
+                    e.insertEmployee(name, city, contact);
+                    break;
+
+                case 2:
+                    e.getEmployee();
+                    break;
+
+                case 3:
+                    System.out.println("Enter Employee Id to update:");
+                    int idUpdate = sc.nextInt();
+                    System.out.println("Enter new City:");
+                    String newCity = sc.next();
+                    e.updateEmployee(idUpdate, newCity);
+                    break;
+
+                case 4:
+                    System.out.println("Enter Employee Id to delete:");
+                    int idDelete = sc.nextInt();
+                    e.deleteEmployee(idDelete);
+                    break;
+
+                case 5:
+                    System.out.println("Program Terminated.");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid Selection");
+                    break;
+            }
+        }
+    }
+}
+
